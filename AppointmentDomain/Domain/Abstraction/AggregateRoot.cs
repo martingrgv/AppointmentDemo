@@ -1,6 +1,6 @@
 ﻿namespace AppointmentDomain.Domain.Abstraction;
 
-public class AggregateRoot
+public class AggregateRoot : Entity
 {
     private readonly List<IDomainEvent> _domainEvents;
     

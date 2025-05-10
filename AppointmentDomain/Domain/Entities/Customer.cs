@@ -1,6 +1,6 @@
 ﻿using AppointmentDomain.Domain.Abstraction;
 
-namespace AppointmentDomain;
+namespace AppointmentDomain.Domain.Entities;
 
 public class Customer : Entity
 {
