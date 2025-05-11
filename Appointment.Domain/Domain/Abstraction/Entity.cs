@@ -1,4 +1,4 @@
-﻿namespace AppointmentDomain.Domain.Abstraction;
+﻿namespace Appointment.Domain.Domain.Abstraction;
 
 public abstract class Entity
 {

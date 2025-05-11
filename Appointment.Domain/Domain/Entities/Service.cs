@@ -1,6 +1,8 @@
-namespace AppointmentDomain.Domain.ValueObjects;
+using Appointment.Domain.Domain.Abstraction;
 
-public record class Service
+namespace Appointment.Domain.Domain.ValueObjects;
+
+public class Service : Entity
 {
     private Service(string name, TimeSpan duration, decimal price)
     {

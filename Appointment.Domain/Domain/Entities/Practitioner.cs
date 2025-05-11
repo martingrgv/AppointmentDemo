@@ -1,19 +1,19 @@
-﻿using AppointmentDomain.Domain.Abstraction;
-using AppointmentDomain.Domain.ValueObjects;
+﻿using Appointment.Domain.Domain.Abstraction;
+using Appointment.Domain.Domain.ValueObjects;
 
-namespace AppointmentDomain.Domain.Entities;
+namespace Appointment.Domain.Domain.Entities;
 
 public class Practitioner : Entity
 {
     private readonly List<WorkingHour> _weeklySchedule = [];
-    private readonly List<Service> _services = [];
+    private readonly List<Guid> _serviceIds = [];
 
     private Practitioner(
         Guid id,
         string firstName,
         string lastName,
-        string email,
-        string phoneNumber)
+        Email email,
+        PhoneNumber phoneNumber)
     {
         Id = id;
         FirstName = firstName;
@@ -24,10 +24,10 @@ public class Practitioner : Entity
 
     public string FirstName { get; }
     public string LastName { get; }
-    public string Email { get; }
-    public string PhoneNumber { get; }
+    public Email Email { get; }
+    public PhoneNumber PhoneNumber { get; }
     public IReadOnlyCollection<WorkingHour> WeeklySchedule => _weeklySchedule.AsReadOnly();
-    public IReadOnlyCollection<Service> Services => _services.AsReadOnly();
+    public IReadOnlyCollection<Guid> Services => _serviceIds.AsReadOnly();
 
     public void SetWeeklySchedule(IEnumerable<WorkingHour> weeklySchedule)
     {
@@ -43,20 +43,20 @@ public class Practitioner : Entity
         return workingHour?.Includes(dateTime.TimeOfDay, duration) ?? false;
     }
 
-    public void AddService(Service service)
+    public void AddService(Guid serviceId)
     {
-        if (!_services.Contains(service))
+        if (!_serviceIds.Contains(serviceId))
         {
-            _services.Add(service);
+            _serviceIds.Add(serviceId);
         }
     }
 
-    public void RemoveService(Service service)
+    public void RemoveService(Guid serviceId)
     {
-        _services.Remove(service);
+        _serviceIds.Remove(serviceId);
     }
 
 
-    public static Practitioner Create(Guid id, string firstName, string lastName, string email, string phoneNumber)
+    public static Practitioner Create(Guid id, string firstName, string lastName, Email email, PhoneNumber phoneNumber)
         => new(id, firstName, lastName, email, phoneNumber);
 }

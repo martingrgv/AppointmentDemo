@@ -1,7 +1,8 @@
-﻿using AppointmentDomain.Domain.Abstraction;
-using AppointmentDomain.Domain.Enums;
+﻿using Appointment.Domain.Domain.Abstraction;
+using Appointment.Domain.Domain.Enums;
+using Appointment.Domain.Domain.ValueObjects;
 
-namespace AppointmentDomain;
+namespace Appointment.Domain.Domain.Entities;
 
 public class Appointment : AggregateRoot
 {
@@ -47,8 +48,7 @@ public class Appointment : AggregateRoot
         Guid practitionerId,
         Guid customerId,
         Guid serviceId,
-        DateTime startTime,
-        TimeSpan duration)
+        DateTime startTime)
     {
         if (serviceId == Guid.Empty)
         {
@@ -65,6 +65,9 @@ public class Appointment : AggregateRoot
             throw new InvalidOperationException();
         }
 
-        return new(id, customerId, practitionerId, serviceId, startTime);
+        return new (id, customerId, practitionerId, serviceId, startTime)
+        {
+            Status = AppointmentStatus.Scheduled
+        };
     }
 }

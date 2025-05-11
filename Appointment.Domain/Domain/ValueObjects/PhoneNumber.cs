@@ -1,8 +1,8 @@
-﻿namespace AppointmentDomain.Domain.ValueObjects;
+﻿namespace Appointment.Domain.Domain.ValueObjects;
 
 public record PhoneNumber
 {
-    private const int Length = 10;
+    private const int Length = 13;
     private static readonly char[] SpecialSymbols = [ '+' ];
     
     private PhoneNumber(string value)

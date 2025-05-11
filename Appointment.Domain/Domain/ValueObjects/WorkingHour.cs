@@ -1,4 +1,4 @@
-﻿namespace AppointmentDomain.Domain.ValueObjects;
+﻿namespace Appointment.Domain.Domain.ValueObjects;
 
 public record WorkingHour(DayOfWeek Day, TimeSpan Start, TimeSpan End)
 {
