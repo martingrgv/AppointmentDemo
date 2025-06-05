@@ -1,5 +1,4 @@
 using Appointment.Api.Dtos;
-using Appointment.Domain.Domain.ValueObjects;
 using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext();
 
 var app = builder.Build();
 
@@ -19,7 +19,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapPost("/appointment", ([FromBody]CreateAppointmentDto appointmentDto) =>
+app.MapPost("/appointment", ([FromBody] CreateAppointmentDto appointmentDto) =>
 {
     var appointmentId = Guid.NewGuid();
     var appointment = Appointment.Domain.Domain.Entities.Appointment.Schedule(

@@ -6,7 +6,7 @@ namespace Appointment.Domain.Domain.Entities;
 public class Practitioner : Entity
 {
     private readonly List<WorkingHour> _weeklySchedule = [];
-    private readonly List<Guid> _serviceIds = [];
+    private readonly List<Service> _services = [];
 
     private Practitioner(
         Guid id,
@@ -27,7 +27,7 @@ public class Practitioner : Entity
     public Email Email { get; }
     public PhoneNumber PhoneNumber { get; }
     public IReadOnlyCollection<WorkingHour> WeeklySchedule => _weeklySchedule.AsReadOnly();
-    public IReadOnlyCollection<Guid> Services => _serviceIds.AsReadOnly();
+    public IReadOnlyCollection<Service> Services => _services.AsReadOnly();
 
     public void SetWeeklySchedule(IEnumerable<WorkingHour> weeklySchedule)
     {
@@ -43,17 +43,33 @@ public class Practitioner : Entity
         return workingHour?.Includes(dateTime.TimeOfDay, duration) ?? false;
     }
 
-    public void AddService(Guid serviceId)
+    public void AssignService(string name, decimal price, TimeSpan duration)
     {
-        if (!_serviceIds.Contains(serviceId))
-        {
-            _serviceIds.Add(serviceId);
-        }
+        if (_services.Any(s => s.Name.Equals(name, StringComparison.OrdinalIgnoreCase)))
+            throw new InvalidOperationException($"A service with offering {name} already exists!");
+
+        var service = Service.Create(name, duration, price);
+        _services.Add(service);
+    }
+
+    public void UpdateService(Guid serviceId, string name, decimal price, TimeSpan duration)
+    {
+        var service = _services.FirstOrDefault(s => s.Id == serviceId);
+
+        if (service is not null)
+            service.Update(name, duration, price);
+        else
+            throw new InvalidOperationException($"Service with ID: {serviceId} was not found!");
     }
 
     public void RemoveService(Guid serviceId)
     {
-        _serviceIds.Remove(serviceId);
+        var service = _services.FirstOrDefault(s => s.Id == serviceId);
+
+        if (service is not null)
+            _services.Remove(service);
+        else
+            throw new InvalidOperationException($"Service with ID: {serviceId} was not found!");
     }
 
 
