@@ -1,4 +1,4 @@
-using Appointment.Domain.Domain.ValueObjects;
+using Appointment.Domain.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

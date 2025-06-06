@@ -1,6 +1,6 @@
 using Appointment.Domain.Domain.Abstraction;
 
-namespace Appointment.Domain.Domain.ValueObjects;
+namespace Appointment.Domain.Domain.Entities;
 
 public class Service : Entity
 {
