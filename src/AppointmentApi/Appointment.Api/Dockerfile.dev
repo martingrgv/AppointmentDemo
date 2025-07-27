@@ -1,0 +1,14 @@
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+EXPOSE 8080
+EXPOSE 8081
+
+WORKDIR /src
+COPY ["AppointmentApi/Appointment.Api/Appointment.Api.csproj", "AppointmentApi/Appointment.Api/"]
+COPY ["AppointmentApi/Appointment.Infrastructure/Appointment.Infrastructure.csproj", "AppointmentApi/Appointment.Infrastructure/"]
+COPY ["AppointmentApi/Appointment.Domain/Appointment.Domain.csproj", "AppointmentApi/Appointment.Domain/"]
+RUN dotnet restore AppointmentApi/Appointment.Api/
+
+COPY . .
+
+WORKDIR /src/AppointmentApi/Appointment.Api
+CMD ["dotnet", "watch", "run", "--urls", "http://0.0.0.0:8080;https://0.0.0.0:8081"]
